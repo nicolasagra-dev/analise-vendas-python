@@ -18,6 +18,7 @@ planilha de vendas -> tratamento com Python -> metricas -> Excel + graficos + da
 - `grafico_faturamento_produto.png`: faturamento por produto
 - `grafico_vendas_mes.png`: evolucao mensal do faturamento
 - `grafico_top_clientes.png`: clientes com maior faturamento
+- `grafico_formas_pagamento.png`: distribuicao do faturamento por forma de pagamento
 - `dashboard.html`: painel visual simples para consulta dos resultados
 
 ## Indicadores calculados
@@ -57,6 +58,7 @@ analise-vendas-python/
 |   |-- grafico_faturamento_produto.png
 |   |-- grafico_vendas_mes.png
 |   |-- grafico_top_clientes.png
+|   |-- grafico_formas_pagamento.png
 |   |-- dashboard.html
 |-- src/
 |   |-- analise_vendas.py
@@ -117,6 +119,8 @@ Depois da execucao, os graficos ficam disponiveis em `saida/` e tambem aparecem 
 ![Vendas por mes](saida/grafico_vendas_mes.png)
 
 ![Top clientes](saida/grafico_top_clientes.png)
+
+![Formas de pagamento](saida/grafico_formas_pagamento.png)
 
 ## Descricao para portfolio
 

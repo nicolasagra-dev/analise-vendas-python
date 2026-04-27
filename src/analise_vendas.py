@@ -3,6 +3,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from openpyxl.chart import BarChart, LineChart, Reference
+from openpyxl.drawing.image import Image
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
@@ -16,6 +17,7 @@ CAMINHO_EXCEL = PASTA_SAIDA / "relatorio_vendas.xlsx"
 CAMINHO_GRAFICO_PRODUTO = PASTA_SAIDA / "grafico_faturamento_produto.png"
 CAMINHO_GRAFICO_MES = PASTA_SAIDA / "grafico_vendas_mes.png"
 CAMINHO_GRAFICO_CLIENTES = PASTA_SAIDA / "grafico_top_clientes.png"
+CAMINHO_GRAFICO_PAGAMENTO = PASTA_SAIDA / "grafico_formas_pagamento.png"
 CAMINHO_DASHBOARD = PASTA_SAIDA / "dashboard.html"
 
 COLUNAS_OBRIGATORIAS = {
@@ -37,6 +39,12 @@ class ErroArquivoEntrada(Exception):
 
 def formatar_moeda(valor: float) -> str:
     return f"R$ {valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def formatar_moeda_curta(valor: float) -> str:
+    if valor >= 1000:
+        return f"R$ {valor / 1000:.1f} mil".replace(".", ",")
+    return formatar_moeda(valor)
 
 
 def localizar_arquivo_entrada() -> Path:
@@ -170,41 +178,118 @@ def calcular_metricas(df: pd.DataFrame) -> dict:
 
 def salvar_graficos(metricas: dict) -> None:
     plt.style.use("seaborn-v0_8-whitegrid")
+    cores = ["#1f4e78", "#0f766e", "#d97706", "#b91c1c", "#475569", "#7c3aed"]
 
-    produto = metricas["vendas_por_produto"].sort_values("faturamento")
-    fig, ax = plt.subplots(figsize=(11, 6))
-    ax.barh(produto["produto"], produto["faturamento"], color="#2563eb")
-    ax.set_title("Faturamento por Produto", fontsize=17, weight="bold", pad=14)
+    produto = metricas["vendas_por_produto"].head(8).sort_values("faturamento")
+    fig, ax = plt.subplots(figsize=(12, 6.5), facecolor="white")
+    barras = ax.barh(produto["produto"], produto["faturamento"], color="#1f4e78")
+    ax.set_title("Faturamento por Produto", fontsize=18, weight="bold", pad=18, loc="left")
+    ax.text(
+        0,
+        1.02,
+        "Produtos ordenados por receita gerada",
+        transform=ax.transAxes,
+        color="#64748b",
+        fontsize=11,
+    )
     ax.set_xlabel("Faturamento")
-    ax.xaxis.set_major_formatter(lambda valor, _: f"R$ {valor/1000:.0f} mil")
-    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.xaxis.set_major_formatter(lambda valor, _: f"R$ {valor / 1000:.0f} mil")
+    ax.bar_label(
+        barras,
+        labels=[formatar_moeda_curta(valor) for valor in produto["faturamento"]],
+        padding=6,
+        fontsize=10,
+        color="#172033",
+    )
+    ax.grid(axis="x", alpha=0.22)
+    ax.grid(axis="y", visible=False)
+    ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
+    ax.tick_params(axis="y", length=0)
     fig.tight_layout()
     fig.savefig(CAMINHO_GRAFICO_PRODUTO, dpi=170)
     plt.close(fig)
 
     mes = metricas["vendas_por_mes"]
-    fig, ax = plt.subplots(figsize=(11, 6))
+    fig, ax = plt.subplots(figsize=(12, 6.5), facecolor="white")
     ax.plot(mes["mes"], mes["faturamento"], marker="o", linewidth=2.6, color="#0f766e")
     ax.fill_between(mes["mes"], mes["faturamento"], alpha=0.12, color="#0f766e")
-    ax.set_title("Evolucao do Faturamento Mensal", fontsize=17, weight="bold", pad=14)
+    ax.set_title("Evolucao do Faturamento Mensal", fontsize=18, weight="bold", pad=18, loc="left")
+    ax.text(
+        0,
+        1.02,
+        "Tendencia mensal de vendas",
+        transform=ax.transAxes,
+        color="#64748b",
+        fontsize=11,
+    )
     ax.set_xlabel("Mes")
     ax.set_ylabel("Faturamento")
     ax.tick_params(axis="x", rotation=45)
-    ax.yaxis.set_major_formatter(lambda valor, _: f"R$ {valor/1000:.0f} mil")
-    ax.spines[["top", "right"]].set_visible(False)
+    ax.yaxis.set_major_formatter(lambda valor, _: f"R$ {valor / 1000:.0f} mil")
+    for _, linha in mes.iterrows():
+        ax.annotate(
+            formatar_moeda_curta(linha["faturamento"]),
+            (linha["mes"], linha["faturamento"]),
+            textcoords="offset points",
+            xytext=(0, 9),
+            ha="center",
+            fontsize=9,
+            color="#172033",
+        )
+    ax.grid(axis="y", alpha=0.22)
+    ax.grid(axis="x", visible=False)
+    ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
     fig.tight_layout()
     fig.savefig(CAMINHO_GRAFICO_MES, dpi=170)
     plt.close(fig)
 
     clientes = metricas["vendas_por_cliente"].head(5).sort_values("faturamento")
-    fig, ax = plt.subplots(figsize=(11, 6))
-    ax.barh(clientes["cliente"], clientes["faturamento"], color="#dc2626")
-    ax.set_title("Top 5 Clientes por Faturamento", fontsize=17, weight="bold", pad=14)
+    fig, ax = plt.subplots(figsize=(12, 6.5), facecolor="white")
+    barras = ax.barh(clientes["cliente"], clientes["faturamento"], color="#b91c1c")
+    ax.set_title("Top 5 Clientes por Faturamento", fontsize=18, weight="bold", pad=18, loc="left")
+    ax.text(
+        0,
+        1.02,
+        "Clientes com maior impacto no resultado",
+        transform=ax.transAxes,
+        color="#64748b",
+        fontsize=11,
+    )
     ax.set_xlabel("Faturamento")
-    ax.xaxis.set_major_formatter(lambda valor, _: f"R$ {valor/1000:.0f} mil")
-    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.xaxis.set_major_formatter(lambda valor, _: f"R$ {valor / 1000:.0f} mil")
+    ax.bar_label(
+        barras,
+        labels=[formatar_moeda_curta(valor) for valor in clientes["faturamento"]],
+        padding=6,
+        fontsize=10,
+        color="#172033",
+    )
+    ax.grid(axis="x", alpha=0.22)
+    ax.grid(axis="y", visible=False)
+    ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
+    ax.tick_params(axis="y", length=0)
     fig.tight_layout()
     fig.savefig(CAMINHO_GRAFICO_CLIENTES, dpi=170)
+    plt.close(fig)
+
+    pagamento = metricas["vendas_por_pagamento"]
+    fig, ax = plt.subplots(figsize=(9, 6.5), facecolor="white")
+    wedges, texts, autotexts = ax.pie(
+        pagamento["faturamento"],
+        labels=pagamento["forma_pagamento"],
+        autopct="%1.1f%%",
+        startangle=90,
+        colors=cores[: len(pagamento)],
+        wedgeprops={"width": 0.42, "edgecolor": "white", "linewidth": 2},
+        textprops={"fontsize": 10, "color": "#172033"},
+    )
+    for texto in autotexts:
+        texto.set_color("white")
+        texto.set_weight("bold")
+    ax.set_title("Faturamento por Forma de Pagamento", fontsize=18, weight="bold", pad=18)
+    ax.text(0, 0, "Pagamentos", ha="center", va="center", fontsize=12, weight="bold", color="#475569")
+    fig.tight_layout()
+    fig.savefig(CAMINHO_GRAFICO_PAGAMENTO, dpi=170)
     plt.close(fig)
 
 
@@ -215,6 +300,94 @@ def moeda_excel(ws, colunas: list[str]) -> None:
         if indice:
             for row in range(2, ws.max_row + 1):
                 ws.cell(row=row, column=indice).number_format = '"R$" #,##0.00'
+
+
+def criar_card_excel(ws, intervalo: str, titulo: str, valor: str, cor: str) -> None:
+    ws.merge_cells(intervalo)
+    celula = ws[intervalo.split(":")[0]]
+    celula.value = f"{titulo}\n{valor}"
+    celula.fill = PatternFill("solid", fgColor=cor)
+    celula.font = Font(color="FFFFFF", bold=True, size=14)
+    celula.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    borda = Side(style="thin", color="FFFFFF")
+    for row in ws[intervalo]:
+        for cell in row:
+            cell.border = Border(left=borda, right=borda, top=borda, bottom=borda)
+
+
+def adicionar_imagem_excel(ws, caminho: Path, celula: str, largura: int) -> None:
+    if not caminho.exists():
+        return
+    imagem = Image(str(caminho))
+    proporcao = largura / imagem.width
+    imagem.width = largura
+    imagem.height = int(imagem.height * proporcao)
+    ws.add_image(imagem, celula)
+
+
+def criar_aba_dashboard_excel(workbook, metricas: dict) -> None:
+    if "Dashboard" in workbook.sheetnames:
+        del workbook["Dashboard"]
+
+    ws = workbook.create_sheet("Dashboard", 0)
+    ws.sheet_view.showGridLines = False
+
+    for coluna in range(1, 16):
+        ws.column_dimensions[get_column_letter(coluna)].width = 13
+    for linha in range(1, 42):
+        ws.row_dimensions[linha].height = 24
+
+    indicadores = metricas["indicadores"].set_index("indicador")["valor"].to_dict()
+
+    ws.merge_cells("B2:N3")
+    titulo = ws["B2"]
+    titulo.value = "Dashboard Executivo de Vendas"
+    titulo.font = Font(size=22, bold=True, color="1F4E78")
+    titulo.alignment = Alignment(horizontal="left", vertical="center")
+
+    ws.merge_cells("B4:N4")
+    subtitulo = ws["B4"]
+    subtitulo.value = "Indicadores, rankings e graficos gerados automaticamente a partir da planilha de entrada."
+    subtitulo.font = Font(size=11, color="64748B")
+    subtitulo.alignment = Alignment(horizontal="left", vertical="center")
+
+    criar_card_excel(
+        ws,
+        "B6:D8",
+        "Faturamento total",
+        formatar_moeda(indicadores["Faturamento total"]),
+        "1F4E78",
+    )
+    criar_card_excel(
+        ws,
+        "E6:G8",
+        "Ticket medio",
+        formatar_moeda(indicadores["Ticket medio"]),
+        "0F766E",
+    )
+    criar_card_excel(
+        ws,
+        "H6:J8",
+        "Qtd. vendida",
+        str(int(indicadores["Quantidade total vendida"])),
+        "D97706",
+    )
+    criar_card_excel(
+        ws,
+        "K6:M8",
+        "Total pedidos",
+        str(int(indicadores["Total de pedidos"])),
+        "B91C1C",
+    )
+
+    ws.merge_cells("B10:G10")
+    ws["B10"].value = "Graficos principais"
+    ws["B10"].font = Font(size=14, bold=True, color="172033")
+
+    adicionar_imagem_excel(ws, CAMINHO_GRAFICO_MES, "B12", 585)
+    adicionar_imagem_excel(ws, CAMINHO_GRAFICO_PRODUTO, "I12", 585)
+    adicionar_imagem_excel(ws, CAMINHO_GRAFICO_CLIENTES, "B30", 585)
+    adicionar_imagem_excel(ws, CAMINHO_GRAFICO_PAGAMENTO, "I30", 430)
 
 
 def criar_relatorio_excel(df: pd.DataFrame, metricas: dict) -> None:
@@ -259,6 +432,7 @@ def criar_relatorio_excel(df: pd.DataFrame, metricas: dict) -> None:
         resumo_ws = workbook["Resumo Executivo"]
         resumo_ws.column_dimensions["A"].width = 32
         resumo_ws.column_dimensions["B"].width = 28
+        criar_aba_dashboard_excel(workbook, metricas)
 
         produto_ws = workbook["Produtos"]
         produto_chart = BarChart()
@@ -379,6 +553,7 @@ def criar_dashboard_html(metricas: dict, arquivo_entrada: Path) -> None:
       <section><h2>Faturamento por produto</h2><img src="grafico_faturamento_produto.png" alt="Faturamento por produto"></section>
       <section><h2>Evolucao mensal</h2><img src="grafico_vendas_mes.png" alt="Vendas por mes"></section>
       <section><h2>Top clientes</h2><img src="grafico_top_clientes.png" alt="Top clientes"></section>
+      <section><h2>Formas de pagamento</h2><img src="grafico_formas_pagamento.png" alt="Formas de pagamento"></section>
       <section><h2>Ranking de produtos</h2>{produto_html}</section>
       <section><h2>Ranking de clientes</h2>{cliente_html}</section>
       <section><h2>Vendas por estado</h2>{estado_html}</section>
@@ -415,6 +590,7 @@ def main() -> None:
     print("- grafico_faturamento_produto.png")
     print("- grafico_vendas_mes.png")
     print("- grafico_top_clientes.png")
+    print("- grafico_formas_pagamento.png")
     print("- dashboard.html")
 
 
