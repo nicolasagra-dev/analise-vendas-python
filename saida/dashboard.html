@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard de Vendas</title>
+  <style>
+    :root {
+      --azul: #1f4e78;
+      --verde: #0f766e;
+      --vermelho: #b91c1c;
+      --texto: #172033;
+      --muted: #64748b;
+      --linha: #d9e2ec;
+      --fundo: #f5f7fb;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: var(--fundo); color: var(--texto); }
+    header { background: #ffffff; border-bottom: 1px solid var(--linha); }
+    .topo { max-width: 1220px; margin: 0 auto; padding: 24px 20px; display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+    .marca { font-weight: 700; color: var(--azul); font-size: 15px; text-transform: uppercase; letter-spacing: .08em; }
+    h1 { margin: 8px 0 4px; font-size: 32px; line-height: 1.15; }
+    .subtitulo { margin: 0; color: var(--muted); }
+    .fonte { color: var(--muted); font-size: 13px; text-align: right; }
+    main { max-width: 1220px; margin: 0 auto; padding: 26px 20px 42px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 22px; }
+    .card { background: #fff; border: 1px solid var(--linha); border-radius: 8px; padding: 18px; box-shadow: 0 8px 22px rgba(15, 23, 42, .06); min-height: 100px; }
+    .card span { display: block; color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+    .card strong { display: block; font-size: 21px; line-height: 1.18; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    section { background: #fff; border: 1px solid var(--linha); border-radius: 8px; padding: 18px; overflow: auto; }
+    section h2 { margin: 0 0 14px; font-size: 18px; }
+    img { width: 100%; height: auto; display: block; }
+    .tabela { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .tabela th, .tabela td { border-bottom: 1px solid #e7edf5; padding: 10px; text-align: left; white-space: nowrap; }
+    .tabela th { background: var(--azul); color: #fff; }
+    @media (max-width: 800px) {
+      .topo { display: block; }
+      .fonte { text-align: left; margin-top: 12px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topo">
+      <div>
+        <div class="marca">Sales Report Automation</div>
+        <h1>Dashboard de Vendas</h1>
+        <p class="subtitulo">Indicadores comerciais gerados automaticamente.</p>
+      </div>
+      <div class="fonte">Arquivo analisado<br><strong>vendas.csv</strong></div>
+    </div>
+  </header>
+  <main>
+    <div class="cards">
+      <div class="card"><span>Faturamento total</span><strong>R$ 269.915,80</strong></div>
+      <div class="card"><span>Ticket medio</span><strong>R$ 7.497,66</strong></div>
+      <div class="card"><span>Quantidade vendida</span><strong>507</strong></div>
+      <div class="card"><span>Total de pedidos</span><strong>36</strong></div>
+      <div class="card"><span>Produto mais vendido</span><strong>Mouse Sem Fio</strong></div>
+      <div class="card"><span>Melhor mes</span><strong>2025-12</strong></div>
+    </div>
+    <div class="grid">
+      <section><h2>Faturamento por produto</h2><img src="grafico_faturamento_produto.png" alt="Faturamento por produto"></section>
+      <section><h2>Evolucao mensal</h2><img src="grafico_vendas_mes.png" alt="Vendas por mes"></section>
+      <section><h2>Top clientes</h2><img src="grafico_top_clientes.png" alt="Top clientes"></section>
+      <section><h2>Ranking de produtos</h2><table border="1" class="dataframe tabela">
+  <thead>
+    <tr style="text-align: right;">
+      <th>produto</th>
+      <th>quantidade</th>
+      <th>faturamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Notebook Pro 14</td>
+      <td>20</td>
+      <td>R$ 97.000,00</td>
+    </tr>
+    <tr>
+      <td>Cadeira Ergonomica</td>
+      <td>45</td>
+      <td>R$ 58.050,00</td>
+    </tr>
+    <tr>
+      <td>Monitor 24</td>
+      <td>54</td>
+      <td>R$ 48.594,60</td>
+    </tr>
+    <tr>
+      <td>Teclado Mecanico</td>
+      <td>76</td>
+      <td>R$ 18.992,40</td>
+    </tr>
+    <tr>
+      <td>Webcam Full HD</td>
+      <td>81</td>
+      <td>R$ 17.811,90</td>
+    </tr>
+    <tr>
+      <td>Headset Premium</td>
+      <td>87</td>
+      <td>R$ 16.521,30</td>
+    </tr>
+    <tr>
+      <td>Mouse Sem Fio</td>
+      <td>144</td>
+      <td>R$ 12.945,60</td>
+    </tr>
+  </tbody>
+</table></section>
+      <section><h2>Ranking de clientes</h2><table border="1" class="dataframe tabela">
+  <thead>
+    <tr style="text-align: right;">
+      <th>cliente</th>
+      <th>quantidade</th>
+      <th>faturamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Consultoria Prime</td>
+      <td>12</td>
+      <td>R$ 58.200,00</td>
+    </tr>
+    <tr>
+      <td>Tech Alpha</td>
+      <td>7</td>
+      <td>R$ 33.950,00</td>
+    </tr>
+    <tr>
+      <td>Studio Visual</td>
+      <td>24</td>
+      <td>R$ 30.960,00</td>
+    </tr>
+    <tr>
+      <td>Finance Corp</td>
+      <td>21</td>
+      <td>R$ 27.090,00</td>
+    </tr>
+    <tr>
+      <td>Data Works</td>
+      <td>29</td>
+      <td>R$ 26.097,10</td>
+    </tr>
+    <tr>
+      <td>Escritorio Max</td>
+      <td>25</td>
+      <td>R$ 22.497,50</td>
+    </tr>
+    <tr>
+      <td>Design Hub</td>
+      <td>76</td>
+      <td>R$ 18.992,40</td>
+    </tr>
+    <tr>
+      <td>Academia Online</td>
+      <td>81</td>
+      <td>R$ 17.811,90</td>
+    </tr>
+  </tbody>
+</table></section>
+      <section><h2>Vendas por estado</h2><table border="1" class="dataframe tabela">
+  <thead>
+    <tr style="text-align: right;">
+      <th>estado</th>
+      <th>quantidade</th>
+      <th>faturamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SP</td>
+      <td>138</td>
+      <td>R$ 104.949,00</td>
+    </tr>
+    <tr>
+      <td>DF</td>
+      <td>12</td>
+      <td>R$ 58.200,00</td>
+    </tr>
+    <tr>
+      <td>SC</td>
+      <td>24</td>
+      <td>R$ 30.960,00</td>
+    </tr>
+    <tr>
+      <td>MG</td>
+      <td>25</td>
+      <td>R$ 22.497,50</td>
+    </tr>
+    <tr>
+      <td>PR</td>
+      <td>76</td>
+      <td>R$ 18.992,40</td>
+    </tr>
+    <tr>
+      <td>RS</td>
+      <td>87</td>
+      <td>R$ 16.521,30</td>
+    </tr>
+    <tr>
+      <td>BA</td>
+      <td>104</td>
+      <td>R$ 9.349,60</td>
+    </tr>
+    <tr>
+      <td>PE</td>
+      <td>1</td>
+      <td>R$ 4.850,00</td>
+    </tr>
+    <tr>
+      <td>RJ</td>
+      <td>40</td>
+      <td>R$ 3.596,00</td>
+    </tr>
+  </tbody>
+</table></section>
+      <section><h2>Formas de pagamento</h2><table border="1" class="dataframe tabela">
+  <thead>
+    <tr style="text-align: right;">
+      <th>forma_pagamento</th>
+      <th>quantidade</th>
+      <th>faturamento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Boleto</td>
+      <td>119</td>
+      <td>R$ 97.631,90</td>
+    </tr>
+    <tr>
+      <td>Cartao de credito</td>
+      <td>133</td>
+      <td>R$ 97.308,40</td>
+    </tr>
+    <tr>
+      <td>Pix</td>
+      <td>255</td>
+      <td>R$ 74.975,50</td>
+    </tr>
+  </tbody>
+</table></section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,37 @@
+data_venda,produto,categoria,quantidade,preco_unitario,cliente,cidade,estado,forma_pagamento
+2025-01-05,Notebook Pro 14,Eletronicos,2,4850.00,Tech Alpha,Sao Paulo,SP,Cartao de credito
+2025-01-12,Mouse Sem Fio,Acessorios,18,89.90,Loja Central,Rio de Janeiro,RJ,Pix
+2025-01-20,Monitor 24,Eletronicos,5,899.90,Escritorio Max,Belo Horizonte,MG,Boleto
+2025-02-03,Teclado Mecanico,Acessorios,12,249.90,Design Hub,Curitiba,PR,Cartao de credito
+2025-02-14,Notebook Pro 14,Eletronicos,1,4850.00,Agencia Norte,Recife,PE,Pix
+2025-02-22,Headset Premium,Acessorios,14,189.90,Call Center Sul,Porto Alegre,RS,Boleto
+2025-03-08,Monitor 24,Eletronicos,8,899.90,Data Works,Sao Paulo,SP,Cartao de credito
+2025-03-19,Cadeira Ergonomica,Moveis,6,1290.00,Studio Visual,Florianopolis,SC,Pix
+2025-03-27,Mouse Sem Fio,Acessorios,22,89.90,Loja Central,Rio de Janeiro,RJ,Pix
+2025-04-04,Webcam Full HD,Acessorios,16,219.90,Academia Online,Campinas,SP,Cartao de credito
+2025-04-17,Notebook Pro 14,Eletronicos,3,4850.00,Consultoria Prime,Brasilia,DF,Boleto
+2025-04-28,Teclado Mecanico,Acessorios,10,249.90,Design Hub,Curitiba,PR,Pix
+2025-05-09,Monitor 24,Eletronicos,7,899.90,Escritorio Max,Belo Horizonte,MG,Cartao de credito
+2025-05-21,Cadeira Ergonomica,Moveis,9,1290.00,Finance Corp,Sao Paulo,SP,Boleto
+2025-05-29,Headset Premium,Acessorios,20,189.90,Call Center Sul,Porto Alegre,RS,Pix
+2025-06-06,Notebook Pro 14,Eletronicos,2,4850.00,Tech Alpha,Sao Paulo,SP,Cartao de credito
+2025-06-15,Webcam Full HD,Acessorios,24,219.90,Academia Online,Campinas,SP,Pix
+2025-06-25,Mouse Sem Fio,Acessorios,30,89.90,Varejo Smart,Salvador,BA,Boleto
+2025-07-02,Monitor 24,Eletronicos,11,899.90,Data Works,Sao Paulo,SP,Cartao de credito
+2025-07-18,Teclado Mecanico,Acessorios,15,249.90,Design Hub,Curitiba,PR,Pix
+2025-07-30,Cadeira Ergonomica,Moveis,8,1290.00,Studio Visual,Florianopolis,SC,Cartao de credito
+2025-08-07,Notebook Pro 14,Eletronicos,4,4850.00,Consultoria Prime,Brasilia,DF,Boleto
+2025-08-16,Headset Premium,Acessorios,28,189.90,Call Center Sul,Porto Alegre,RS,Pix
+2025-08-24,Webcam Full HD,Acessorios,19,219.90,Academia Online,Campinas,SP,Cartao de credito
+2025-09-05,Mouse Sem Fio,Acessorios,34,89.90,Varejo Smart,Salvador,BA,Pix
+2025-09-13,Monitor 24,Eletronicos,10,899.90,Data Works,Sao Paulo,SP,Boleto
+2025-09-26,Teclado Mecanico,Acessorios,18,249.90,Design Hub,Curitiba,PR,Cartao de credito
+2025-10-03,Cadeira Ergonomica,Moveis,12,1290.00,Finance Corp,Sao Paulo,SP,Boleto
+2025-10-19,Notebook Pro 14,Eletronicos,3,4850.00,Tech Alpha,Sao Paulo,SP,Pix
+2025-10-28,Headset Premium,Acessorios,25,189.90,Call Center Sul,Porto Alegre,RS,Cartao de credito
+2025-11-06,Monitor 24,Eletronicos,13,899.90,Escritorio Max,Belo Horizonte,MG,Pix
+2025-11-17,Webcam Full HD,Acessorios,22,219.90,Academia Online,Campinas,SP,Boleto
+2025-11-25,Mouse Sem Fio,Acessorios,40,89.90,Varejo Smart,Salvador,BA,Pix
+2025-12-04,Notebook Pro 14,Eletronicos,5,4850.00,Consultoria Prime,Brasilia,DF,Cartao de credito
+2025-12-12,Cadeira Ergonomica,Moveis,10,1290.00,Studio Visual,Florianopolis,SC,Boleto
+2025-12-20,Teclado Mecanico,Acessorios,21,249.90,Design Hub,Curitiba,PR,Pix
