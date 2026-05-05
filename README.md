@@ -2,6 +2,12 @@
 
 Automacao de relatorios de vendas com Python. O projeto transforma uma planilha CSV ou Excel em indicadores comerciais, relatorio profissional em Excel, graficos em imagem e dashboard HTML.
 
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![Pandas](https://img.shields.io/badge/Pandas-analise%20de%20dados-150458)
+![Status](https://img.shields.io/badge/status-pronto%20para%20portfolio-green)
+
+![Dashboard de vendas](saida/grafico_vendas_mes.png)
+
 ## Problema resolvido
 
 Muitos negocios pequenos ainda montam relatorios de vendas manualmente em planilhas. Isso consome tempo, aumenta risco de erro e dificulta enxergar rapidamente os resultados.
@@ -44,6 +50,14 @@ planilha de vendas -> tratamento com Python -> metricas -> Excel + graficos + da
 - Matplotlib
 - OpenPyXL
 - Excel
+
+## O que este projeto demonstra
+
+- Automacao de uma rotina comum em pequenos negocios: transformar planilhas em relatorios.
+- Validacao de colunas obrigatorias e tratamento de dados invalidos.
+- Geracao de entregaveis executivos em Excel, imagens e dashboard HTML.
+- Separacao entre entrada (`entrada/`), dados de exemplo (`dados/`) e saida gerada (`saida/`).
+- Boa comunicacao de indicadores comerciais para pessoas nao tecnicas.
 
 ## Estrutura do projeto
 
@@ -126,6 +140,10 @@ Depois da execucao, os graficos ficam disponiveis em `saida/` e tambem aparecem 
 
 Crio automacoes em Python para transformar planilhas de vendas em relatorios organizados com indicadores, graficos e dashboard. A solucao reduz trabalho manual, padroniza analises e facilita o acompanhamento comercial.
 
+Sugestao para curriculo:
+
+`Sales Report Automation | Python, Pandas, OpenPyXL | automacao que gera relatorio Excel, graficos e dashboard HTML a partir de planilhas de vendas`
+
 ## Possiveis evolucoes
 
 - filtros por periodo no dashboard
@@ -133,3 +151,4 @@ Crio automacoes em Python para transformar planilhas de vendas em relatorios org
 - leitura de multiplas planilhas na mesma execucao
 - versao com interface grafica
 - deploy em Streamlit
+- testes automatizados para validacao da entrada e dos indicadores
